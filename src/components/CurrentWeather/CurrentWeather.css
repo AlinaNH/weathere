@@ -1,0 +1,20 @@
+.weatherForecastNowContainer {
+    display: flex;
+    justify-content: center;
+    margin: 5vw 0 1vw;
+    font-size: 18px;
+}
+
+.weatherForecastNowTable {
+    margin-left: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .weatherForecastNowContainer {
+        font-size: 14px;
+    }
+
+    .weatherForecastNowTable {
+        margin-left: 10px;
+    }
+}

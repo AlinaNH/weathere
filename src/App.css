@@ -1,0 +1,28 @@
+.container {
+    display: absolute;
+    height: 80%;
+    width: 50%;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+    background-color: #FFFDF7;
+    overflow-y: auto;
+}
+
+.notLoaded {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 76px;
+    text-align: center;
+    color: #CCCCC9;
+}
+
+@media only screen and (max-width: 1024px) {
+    .container {
+        width: 95%;
+    }
+
+    .notLoaded {
+        font-size: 56px;
+    }
+}

@@ -1,0 +1,10 @@
+.weatherForecastTodayTable {
+  border-collapse: collapse;
+  margin: auto;
+  width: 90%;
+}
+
+.weatherForecastTodayTableRow {
+  text-align: center;
+  border-bottom: 1px solid #CCCCC9;
+}
