@@ -1,0 +1,36 @@
+.inputContainerCity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+    margin-top: 5%;
+}
+
+.inputCity {
+    width: 40%;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #CCCCC9;
+    background-color: inherit;
+    color: #A7A7A5;
+    font-size: 24px;
+}
+
+.submitCity {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #CCCCC9;
+    background-color: inherit;
+    color: #A7A7A5;
+    font-size: 24px;
+}
+
+@media only screen and (max-width: 415px) {
+    .inputCity {
+        font-size: 18px;
+    }
+
+    .submitCity{
+        font-size: 18px;
+    }
+}

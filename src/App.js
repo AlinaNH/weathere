@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
+import CitySelection from './components/CitySelection/CitySelection';
 
 
 class App extends React.Component {
@@ -9,8 +10,15 @@ class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      result: []
+      result: [],
+      selectedCity: "Minsk"
     };
+    this.getDataForSelectedCity = this.getDataForSelectedCity.bind(this);
+  }
+
+  getDataForSelectedCity(city) {
+    this.setState({selectedCity: city});
+    console.log(this.state.selectedCity);
   }
 
   getWeatherForecastData() {
@@ -44,7 +52,12 @@ class App extends React.Component {
     } else if(!isLoaded) {
       output = <div className="notLoaded"><i className="fa fa-cog fa-spin"></i></div>;
     } else {
-      output = <CurrentWeather weatherForecastData={result.list} />;
+      output = (
+        <>
+          <CitySelection onCitySubmit={this.getDataForSelectedCity}/>
+          <CurrentWeather weatherForecastData={result.list} />
+        </>
+      );
     }
     return (
       <div className="container">{output}</div>

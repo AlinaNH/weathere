@@ -1,7 +1,7 @@
 .weatherForecastNowContainer {
     display: flex;
     justify-content: center;
-    margin: 5vw 0 1vw;
+    margin: 1vw 0 1vw;
     font-size: 18px;
 }
 
