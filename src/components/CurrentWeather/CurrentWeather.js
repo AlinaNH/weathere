@@ -27,6 +27,7 @@ class CurrentWeather extends React.Component {
         return (
             <>
                 <div className="weatherForecastNowContainer">
+                    <div className="cityNameContainer">{this.props.selectedCity}</div>
                     <div>
                         <img
                             src={"http://openweathermap.org/img/wn/"+ currentWeatherData.icon +"@2x.png"}

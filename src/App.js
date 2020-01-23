@@ -16,20 +16,30 @@ class App extends React.Component {
     this.getDataForSelectedCity = this.getDataForSelectedCity.bind(this);
   }
 
-  getDataForSelectedCity(city) {
-    this.setState({selectedCity: city});
-    console.log(this.state.selectedCity);
+  handleInvalidCityInput() {
+    document.getElementById("inputCity").classList.add("invalidInputCity");
+    document.getElementById("errorMessageCity").style.display = "block";
   }
 
-  getWeatherForecastData() {
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=Minsk&appid=e9d7d03ef5105d96f8db4fb4a1f8c3e2&units=metric")
-      .then(response => response.json())
+  getDataForSelectedCity(city) {
+    this.getWeatherForecastData(city);
+  }
+
+  getWeatherForecastData(city) {
+   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=e9d7d03ef5105d96f8db4fb4a1f8c3e2&units=metric`)
+      .then(
+        response => response.json())
       .then(
         (result) => {
-          this.setState({
-            isLoaded: true,
-            result
-          });
+          if(result.cod === "404") {
+            this.handleInvalidCityInput();
+          } else {
+            this.setState({
+              isLoaded: true,
+              result,
+              selectedCity: city
+            });
+          }
         },
         (error) => {
           this.setState({
@@ -41,7 +51,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getWeatherForecastData();
+    this.getWeatherForecastData(this.state.selectedCity);
   }
 
   render() {
@@ -54,8 +64,8 @@ class App extends React.Component {
     } else {
       output = (
         <>
-          <CitySelection onCitySubmit={this.getDataForSelectedCity}/>
-          <CurrentWeather weatherForecastData={result.list} />
+          <CitySelection onCitySubmit={this.getDataForSelectedCity} />
+          <CurrentWeather weatherForecastData={result.list} selectedCity={this.state.selectedCity} />
         </>
       );
     }

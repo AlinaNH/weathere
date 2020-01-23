@@ -9,6 +9,11 @@
     margin-left: 20px;
 }
 
+.cityNameContainer {
+    font-size: 54px;
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 767px) {
     .weatherForecastNowContainer {
         font-size: 14px;

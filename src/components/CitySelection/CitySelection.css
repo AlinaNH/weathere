@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 10%;
     margin-top: 5%;
 }
 
@@ -23,6 +22,21 @@
     background-color: inherit;
     color: #A7A7A5;
     font-size: 24px;
+}
+
+.invalidInputCity {
+    border-bottom: 2px solid tomato;
+}
+
+.invalidInputCity ~ .submitCity {
+    border-bottom: 2px solid tomato;
+    color: tomato;
+}
+
+.errorMessageCity {
+    display: none;
+    text-align: center;
+    color: tomato;
 }
 
 @media only screen and (max-width: 415px) {
