@@ -9,16 +9,18 @@ class CitySelection extends React.Component {
 
     showInputContainerButton() {
         let inputContainerCityOpacity = document.getElementById("inputContainerCity");
-        if (inputContainerCityOpacity.style.opacity === "0") {
-            setTimeout(() => inputContainerCityOpacity.style.opacity = "1", 0);
+        if (inputContainerCityOpacity.style.opacity === "" || inputContainerCityOpacity.style.opacity === "0") {
+            inputContainerCityOpacity.style.opacity = "1";
         } else {
-            setTimeout(() => inputContainerCityOpacity.style.opacity = "0", 0);
+            inputContainerCityOpacity.style.opacity = "0";
         }
     }
 
     handleCitySelection() {
         const inputCityValue = document.getElementById("inputCity").value;
-        this.props.onCitySubmit(inputCityValue);
+        if (inputCityValue) {
+            this.props.onCitySubmit(inputCityValue);
+        }
     }
 
     hideErrorMessage() {
