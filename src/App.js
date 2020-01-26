@@ -12,9 +12,23 @@ class App extends React.Component {
       error: null,
       isLoaded: false,
       result: [],
-      selectedCity: "Minsk"
+      city: "New York",
+      lat: null,
+      lon: null
     };
     this.getDataForSelectedCity = this.getDataForSelectedCity.bind(this);
+  }
+
+  getWeatherForecastDataForCurrentGeolocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          lat: position.coords.latitude.toFixed(2),
+          lon: position.coords.longitude.toFixed(2)
+        });
+        this.getWeatherForecastData();
+      });
+    }
   }
 
   handleInvalidCityInput() {
@@ -27,7 +41,14 @@ class App extends React.Component {
   }
 
   getWeatherForecastData(city) {
-   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=e9d7d03ef5105d96f8db4fb4a1f8c3e2&units=metric`)
+    let api;
+    if (!city) {
+      api = `https://api.openweathermap.org/data/2.5/forecast?lat=${this.state.lat}&lon=${this.state.lon}&appid=e9d7d03ef5105d96f8db4fb4a1f8c3e2&units=metric`;
+    } else {
+      api = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=e9d7d03ef5105d96f8db4fb4a1f8c3e2&units=metric`;
+    }
+
+   fetch(api)
       .then(
         response => response.json())
       .then(
@@ -35,10 +56,11 @@ class App extends React.Component {
           if(result.cod === "404") {
             this.handleInvalidCityInput();
           } else {
+            console.log(result)
             this.setState({
               isLoaded: true,
               result,
-              selectedCity: city
+              city: result.city.name
             });
           }
         },
@@ -52,7 +74,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getWeatherForecastData(this.state.selectedCity);
+    this.getWeatherForecastDataForCurrentGeolocation();
   }
 
   render() {
@@ -67,7 +89,7 @@ class App extends React.Component {
         <>
           <Background />
           <CitySelection onCitySubmit={this.getDataForSelectedCity} />
-          <CurrentWeather weatherForecastData={result.list} selectedCity={this.state.selectedCity} />
+          <CurrentWeather weatherForecastData={result.list} selectedCity={this.state.city} />
         </>
       );
     }
