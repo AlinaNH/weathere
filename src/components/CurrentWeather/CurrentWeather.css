@@ -1,6 +1,7 @@
 .weatherForecastNowContainer {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 1vw 0 1vw;
     font-size: 18px;
 }
@@ -23,3 +24,14 @@
         margin-left: 10px;
     }
 }
+
+@media only screen and (max-width: 414px) and (max-height: 736px) {
+    .cityNameContainer {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .weatherForecastNowContainer {
+        font-size: 12px;
+    }
+  }

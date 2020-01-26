@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import CitySelection from './components/CitySelection/CitySelection';
+import Background from './components/Background/Background';
 
 
 class App extends React.Component {
@@ -64,6 +65,7 @@ class App extends React.Component {
     } else {
       output = (
         <>
+          <Background />
           <CitySelection onCitySubmit={this.getDataForSelectedCity} />
           <CurrentWeather weatherForecastData={result.list} selectedCity={this.state.selectedCity} />
         </>

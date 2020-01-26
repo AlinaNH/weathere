@@ -1,26 +1,39 @@
-.inputContainerCity {
+.inputContainerCityButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1% 0;
+}
+
+.inputCityButton {
+    font-size: 24px;
+}
+
+#inputContainerCity {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-top: 5%;
+    justify-content: center; 
+    margin-top: 1%;
+    opacity: 0;
+    transition: .6s ease opacity,.6s ease transform;
 }
 
 .inputCity {
     width: 40%;
     outline: none;
     border: none;
-    border-bottom: 2px solid #CCCCC9;
+    border-bottom: 2px solid #7F879A;
     background-color: inherit;
-    color: #A7A7A5;
+    color: #4F5A75;
     font-size: 24px;
 }
 
 .submitCity {
     outline: none;
     border: none;
-    border-bottom: 2px solid #CCCCC9;
+    border-bottom: 2px solid #7F879A;
     background-color: inherit;
-    color: #A7A7A5;
+    color: #7F879A;
     font-size: 24px;
 }
 
@@ -39,7 +52,12 @@
     color: tomato;
 }
 
-@media only screen and (max-width: 415px) {
+@media only screen and (max-width: 414px) and (max-height: 736px) {
+    .inputContainerCityButton {
+        font-size: 12px;
+        margin: 5% 0;
+    }
+
     .inputCity {
         font-size: 18px;
     }
