@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
+import Background from './components/Background/Background';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import CitySelection from './components/CitySelection/CitySelection';
-import Background from './components/Background/Background';
 
 
 class App extends React.Component {
@@ -56,7 +56,6 @@ class App extends React.Component {
           if(result.cod === "404") {
             this.handleInvalidCityInput();
           } else {
-            console.log(result)
             this.setState({
               isLoaded: true,
               result,

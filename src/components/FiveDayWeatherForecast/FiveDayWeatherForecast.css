@@ -1,0 +1,19 @@
+.fiveDayWeatherForecastButton {
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+    margin: 1% 0;
+}
+
+.fiveDayWeatherForecastLabel {
+    margin-right: 5px;
+}
+
+.slowDisplayNone {
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+.fiveDayWeatherForecastTable {
+    display: none;
+}

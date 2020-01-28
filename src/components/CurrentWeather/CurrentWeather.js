@@ -1,5 +1,6 @@
 import React from "react";
 import './CurrentWeather.css';
+import FiveDayWeatherForecast from './../FiveDayWeatherForecast/FiveDayWeatherForecast';
 import WeatherByHour from './../WeatherByHour/WeatherByHour';
 
 class CurrentWeather extends React.Component {
@@ -43,6 +44,7 @@ class CurrentWeather extends React.Component {
                         <div>wind: {currentWeatherData.windSpeed} km/h</div>
                     </div>
                 </div>
+                <FiveDayWeatherForecast weatherForecastData={this.props.weatherForecastData}/>
                 <WeatherByHour weatherForecastData={this.props.weatherForecastData} />
             </>
         );
