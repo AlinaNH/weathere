@@ -1,3 +1,9 @@
+.containerTable {
+    display: none;
+    justify-content: center;
+    height: 90%;
+}
+
 .fiveDayWeatherForecastButton {
     display: flex;
     justify-content: flex-end;
@@ -5,7 +11,17 @@
     margin: 1% 0;
 }
 
-.fiveDayWeatherForecastLabel {
+.currentWeatherForecastButton {
+    display: none;
+    width: 90%;
+    margin: 3% 3%;
+}
+
+.currentWeatherForecastButton .fiveDayWeatherForecastLabel {
+    margin-left: 5px;
+}
+
+.fiveDayWeatherForecastButton .fiveDayWeatherForecastLabel {
     margin-right: 5px;
 }
 
@@ -15,5 +31,27 @@
 }
 
 .fiveDayWeatherForecastTable {
-    display: none;
+    border-collapse: collapse;
+    margin: auto;
+    width: 95%;
+    border-collapse:separate; 
+    border-spacing:0 10px;
+    font-size: 14px;
+}
+
+.fiveDayWeatherForecastTableRow {
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    background-color:rgba(255, 255, 255, 0.3);
+    width: 100%;
+}
+
+.fiveDayWeatherForecastTableRow span {
+    display: block;
+    margin: 1%;
+}
+
+.boldTd {
+    font-size: 16px;
+    font-weight: 900;
 }
