@@ -1,18 +1,20 @@
-import React from 'react';
-import './WeatherByHour.css';
+import React from "react";
+import "./WeatherByHour.css";
 
 class WeatherByHour extends React.Component {
     defineWeatherByHour() {
-        const weatherForecastData = this.props.weatherForecastData;
+        const data = this.props.weatherForecastData;
         let weatherByHourData = [];
         for (let i = 1 ; i <= 9; i++) { // data for next 24 hour with 3 hour interval
-            const data = {};
-            data.hour = new Date(weatherForecastData[i].dt_txt).getHours();
-            data.icon = weatherForecastData[i].weather[0].icon;
-            data.temperature = Math.round(weatherForecastData[i].main.temp);
-            data.description = weatherForecastData[i].weather[0].description;
-            data.wind = weatherForecastData[i].wind.speed;
-            weatherByHourData.push(data);
+            const sortedData = {};
+
+            sortedData.hour = new Date(data[i].dt_txt).getHours();
+            sortedData.icon = data[i].weather[0].icon;
+            sortedData.temperature = Math.round(data[i].main.temp);
+            sortedData.description = data[i].weather[0].description;
+            sortedData.wind = data[i].wind.speed;
+
+            weatherByHourData.push(sortedData);
         }
         return weatherByHourData;
     }
@@ -22,7 +24,7 @@ class WeatherByHour extends React.Component {
         let weatherByHourOutputData = [];
         weatherByHourData.forEach((data, index) => {
             weatherByHourOutputData.push(
-                <tr key={index} className="weatherForecastTodayTableRow">
+                <tr key={index} className="weatherByHourTableRow">
                     <td>{data.hour}:00</td>
                     <td>
                         <img
@@ -41,11 +43,13 @@ class WeatherByHour extends React.Component {
 
     render() {
         return (
-            <table className="weatherForecastTodayTable">
-                <tbody>
-                    {this.showWeatherByHour()}
-                </tbody>
-            </table>
+            <div className="threeHourWeatherForecastContainer">
+                <table className="weatherByHourTable">
+                    <tbody>
+                        {this.showWeatherByHour()}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

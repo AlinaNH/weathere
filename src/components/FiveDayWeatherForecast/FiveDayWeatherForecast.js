@@ -1,65 +1,12 @@
-import React from 'react';
-import './FiveDayWeatherForecast.css';
-import moment from 'moment';
+import React from "react";
+import "./FiveDayWeatherForecast.css";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import moment from "moment";
 
 class FiveDayWeatherForecast extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            components: null,
-            fiveDayWeatherForecastData: null
-        }
-        this.sleep = this.sleep.bind(this);
-        this.showFiveWeatherForecastPage = this.showFiveWeatherForecastPage.bind(this);
-        this.showFiveWeatherForecast = this.showFiveWeatherForecast.bind(this);
-        this.defineFiveDayWeatherForecastData = this.defineFiveDayWeatherForecastData.bind(this);
-        this.sortWeatherForecastDataForRows = this.sortWeatherForecastDataForRows.bind(this);
-    }
-
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    showFiveWeatherForecastPage(action) {
-        if (!action) {
-            this.state.components.forEach((component) => component.style.display = "none");
-            document.getElementsByClassName("containerTable")[0].style.display = "flex";
-            document.getElementsByClassName("currentWeatherForecastButton")[0].style.display = "flex";
-        } else {
-            this.state.components.forEach((component) => component.style.display = "");
-            document.getElementsByClassName("containerTable")[0].style.display = "none";
-            document.getElementsByClassName("currentWeatherForecastButton")[0].style.display = "none";
-        }
-        // if (action) {
-        //     let timer = 0;
-        //     this.state.components.forEach(async (component) => {
-        //         await this.sleep(timer);
-        //         setTimeout(() => {component.classList.add("slowDisplayNone")}, 500 + timer);  
-        //         timer +=500;
-        //         await this.sleep(timer);
-        //         if(timer === 3000) {
-        //             timer +=500;
-        //             await this.sleep(timer);
-        //             this.state.components.forEach((component) => component.style.display = "none");
-        //             document.getElementsByClassName("containerTable")[0].classList.remove("slowDisplayNone");
-        //             document.getElementsByClassName("containerTable")[0].style.display = "flex";
-        //             document.getElementsByClassName("currentWeatherForecastButton")[0].classList.remove("slowDisplayNone");
-        //             document.getElementsByClassName("currentWeatherForecastButton")[0].style.display = "flex";
-        //         }
-        //     });
-        // }
-    }
-
-    componentDidMount() {
-        this.setState({
-            components: document.querySelectorAll(".container > *:not(.backgroundContainer)"),
-            fiveDayWeatherForecastData: this.defineFiveDayWeatherForecastData()
-        });
-    }
-
     defineFiveDayWeatherForecastData() {
-        const todayDate = new Date().getDate();
-        const fiveDayWeatherForecastData = [];
+        const todayDate = new Date().getDate(),
+              fiveDayWeatherForecastData = [];
         this.props.weatherForecastData.forEach((data) => {
             if (new Date(data.dt_txt).getDate() !== todayDate) {
                 fiveDayWeatherForecastData.push(data);
@@ -67,22 +14,22 @@ class FiveDayWeatherForecast extends React.Component {
         });
         return fiveDayWeatherForecastData;
     }
-    
+
     sortWeatherForecastDataForRows() {
-        const weatherForecastDataForRows = [];
-
-        let nextDay = moment().add(1, 'days').format('DD.MM.YYYY').slice(0, 5);
-        let rowData = {};
-        let dataByHour = [];
-        const data = this.state.fiveDayWeatherForecastData;
-
+        const weatherForecastDataForRows = [],
+              data = this.defineFiveDayWeatherForecastData();
+        let nextDay = moment().add(1, "days").format("DD.MM.YYYY").slice(0, 5),
+            rowData = {},
+            dataByHour = [];
+    
         for(let i = 0; i < data.length; i++) {
-            const date = moment(new Date(data[i].dt_txt)).format('DD.MM.YYYY').slice(0, 5);
+            const date = moment(new Date(data[i].dt_txt)).format("DD.MM.YYYY").slice(0, 5);
+
             if(date === nextDay) {
                 rowData.day = moment(new Date(data[i].dt_txt)).format("ddd");
                 rowData.date = date;
                 dataByHour.push({
-                    hour: moment(new Date(data[i].dt_txt)).format('HH:mm'),
+                    hour: moment(new Date(data[i].dt_txt)).format("HH:mm"),
                     icon: data[i].weather[0].icon,
                     temperature: Math.round(data[i].main.temp),
                     wind: data[i].wind.speed
@@ -96,17 +43,19 @@ class FiveDayWeatherForecast extends React.Component {
                 rowData.date = date;
                 i--;
             }
+
             if (i === data.length - 1) {
                 weatherForecastDataForRows.push(rowData);
             }
         }
+
         return weatherForecastDataForRows;
     }
 
     showFiveWeatherForecast() {
-        let data = [];
-        let fiveDayWeatherOutputData = [];
-        if(this.state.fiveDayWeatherForecastData) data = this.sortWeatherForecastDataForRows();
+        let data = this.sortWeatherForecastDataForRows(),
+            fiveDayWeatherOutputData = [];
+
         data.forEach((data, index) => {
             const dataByHour = [];
             data.dataByHour.forEach((data, index) => {
@@ -122,9 +71,11 @@ class FiveDayWeatherForecast extends React.Component {
                     </td>
                 );
             });
+            
             while(dataByHour.length <= 7) {
                 dataByHour.push(<td key={dataByHour.length}></td>);
             }
+
             fiveDayWeatherOutputData.push(
                 <tr key={index} className="fiveDayWeatherForecastTableRow">
                     <td className="boldTd">{data.day}</td>
@@ -133,24 +84,70 @@ class FiveDayWeatherForecast extends React.Component {
                 </tr>
             );
         });
+        
         return fiveDayWeatherOutputData;
+    }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    toggleWeatherForecastPages(container) {
+        const components = document.querySelectorAll("." + container);
+        let hiddenComponents, shownComponents, timer = 0;
+
+        if(container === "threeHourWeatherForecastContainer") {
+            hiddenComponents = document.querySelectorAll(".threeHourWeatherForecastContainer");
+            shownComponents = document.querySelectorAll(".fiveDayWeatherForecastContainer");
+        } else {
+            hiddenComponents = document.querySelectorAll(".fiveDayWeatherForecastContainer");
+            shownComponents = document.querySelectorAll(".threeHourWeatherForecastContainer");
+        }
+
+        hiddenComponents.forEach(async (component) => {
+            await this.sleep(timer);
+            setTimeout(() => {component.classList.add("slowDisplayNone")}, 400 + timer);  
+            timer +=400;
+            await this.sleep(timer);
+            if(components.length * 400 === timer) {
+                timer +=400;
+                await this.sleep(timer);
+                hiddenComponents.forEach((component) => component.style.display = "none");
+            }
+            timer +=400;
+            await this.sleep(timer);
+            setTimeout(() => {component.classList.remove("slowDisplayNone")}, 0);
+            shownComponents.forEach((component) => component.style.display = "block");
+        });
     }
  
     render() {
         return (
             <>
-                <div className="fiveDayWeatherForecastButton" onClick={() => this.showFiveWeatherForecastPage(false)}>
-                    <div className="fiveDayWeatherForecastLabel">5 day weather forecast</div>
-                    <div><i className="fas fa-angle-double-right"></i></div>
+                <div className="threeHourWeatherForecastContainer">
+                    <div
+                        className="fiveDayWeatherForecastButton"
+                        onClick={() => this.toggleWeatherForecastPages("threeHourWeatherForecastContainer")}
+                    >
+                        <div className="fiveDayWeatherForecastLabel">5 day weather forecast</div>
+                        <IoIosArrowForward />
+                    </div>
                 </div>
-                <div className="currentWeatherForecastButton" onClick={() => this.showFiveWeatherForecastPage(true)}>
-                    <div><i className="fas fa-angle-double-left"></i></div>
-                        <div className="fiveDayWeatherForecastLabel">back to today forcast</div>
+                <div className="fiveDayWeatherForecastContainer">
+                    <div
+                        className="currentWeatherForecastButton"
+                        onClick={() => this.toggleWeatherForecastPages("fiveDayWeatherForecastContainer")}
+                    >
+                        <IoIosArrowBack />
+                        <div className="currentWeatherForecastLabel">back to today forecast</div>
+                    </div>
                 </div>
-                <div className="containerTable">
-                    <table className="fiveDayWeatherForecastTable">
-                        <tbody>{this.showFiveWeatherForecast()}</tbody>
-                    </table>
+                <div className="fiveDayWeatherForecastContainer">
+                    <div className="fiveDayWeatherForecastTableContainer fiveDayWeatherForecastContainer">
+                        <table className="fiveDayWeatherForecastTable">
+                            <tbody>{this.showFiveWeatherForecast()}</tbody>
+                        </table>
+                    </div>
                 </div>
             </>);
     }

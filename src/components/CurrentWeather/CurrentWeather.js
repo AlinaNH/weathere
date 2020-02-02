@@ -1,52 +1,40 @@
 import React from "react";
-import './CurrentWeather.css';
-import FiveDayWeatherForecast from './../FiveDayWeatherForecast/FiveDayWeatherForecast';
-import WeatherByHour from './../WeatherByHour/WeatherByHour';
+import "./CurrentWeather.css";
 
 class CurrentWeather extends React.Component {
     defineCurrentWeatherData() {
-        const currentWeatherData = Object.entries(this.props.weatherForecastData)[0][1];
-        
-        const icon = currentWeatherData.weather[0].icon;
-        const temperature = Math.round(currentWeatherData.main.temp);
-        const weatherDescription = currentWeatherData.weather[0].description;
-        const weatherFeelsLike = Math.round(currentWeatherData.main.feels_like);
-        const windSpeed = currentWeatherData.wind.speed;
-
+        const data = Object.entries(this.props.weatherForecastData)[0][1];
         return {
-            icon,
-            temperature,
-            weatherDescription,
-            weatherFeelsLike,
-            windSpeed
+            icon: data.weather[0].icon,
+            temperature: Math.round(data.main.temp),
+            description: data.weather[0].description,
+            weatherFeelsLike: Math.round(data.main.feels_like),
+            windSpeed: data.wind.speed
         };
     }
 
     render() {
-        const currentWeatherData = this.defineCurrentWeatherData();
-   
+        const data = this.defineCurrentWeatherData();
         return (
-            <>
-                <div className="weatherForecastNowContainer">
+            <div className="threeHourWeatherForecastContainer">
+                <div className="currentWeatherContainer">
                     <div className="cityNameContainer">{this.props.selectedCity}</div>
                     <div>
                         <img
-                            src={"http://openweathermap.org/img/wn/"+ currentWeatherData.icon +"@2x.png"}
+                            src={"http://openweathermap.org/img/wn/"+ data.icon +"@2x.png"}
                             alt="weather icon"
                         />
                     </div>
                     <div>
-                        <h1>{currentWeatherData.temperature} °C</h1>
+                        <h1>{data.temperature} °C</h1>
                     </div>
-                    <div className="weatherForecastNowTable">
-                        <div>{currentWeatherData.weatherDescription}</div>
-                        <div>feels like {currentWeatherData.weatherFeelsLike} °C</div>
-                        <div>wind: {currentWeatherData.windSpeed} km/h</div>
+                    <div className="currentWeatherTable">
+                        <div>{data.description}</div>
+                        <div>feels like {data.weatherFeelsLike} °C</div>
+                        <div>wind: {data.windSpeed} km/h</div>
                     </div>
                 </div>
-                <FiveDayWeatherForecast weatherForecastData={this.props.weatherForecastData}/>
-                <WeatherByHour weatherForecastData={this.props.weatherForecastData} />
-            </>
+            </div>
         );
     }
 }

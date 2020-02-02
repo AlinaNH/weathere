@@ -1,12 +1,12 @@
-.weatherForecastNowContainer {
+.currentWeatherContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1vw 0 1vw;
+    margin: 1% 0;
     font-size: 18px;
 }
 
-.weatherForecastNowTable {
+.currentWeatherTable {
     margin-left: 20px;
 }
 
@@ -16,22 +16,22 @@
 }
 
 @media only screen and (max-width: 767px) {
-    .weatherForecastNowContainer {
+    .currentWeatherContainer {
         font-size: 14px;
     }
 
-    .weatherForecastNowTable {
+    .currentWeatherTable {
         margin-left: 10px;
     }
 }
 
 @media only screen and (max-width: 414px) and (max-height: 736px) {
+    .currentWeatherContainer {
+        font-size: 12px;
+    }
+    
     .cityNameContainer {
         font-size: 24px;
         font-weight: bold;
-    }
-
-    .weatherForecastNowContainer {
-        font-size: 12px;
     }
   }
