@@ -20,6 +20,10 @@ body {
             user-select: none;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+}
+
 #root {
     display: flex;
     justify-content: center;
